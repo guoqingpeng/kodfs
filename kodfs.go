@@ -18,7 +18,7 @@ func main() {
 	fmt.Println("可牛了。。。分布式对象存储系统开始服务")
 	fmt.Println(kodfs_config.Config())
 
-	//start	to parse the args from inputs
+	//step1 start	to parse the args from inputs
 	flag.Parse()
 	fmt.Println(*configRoot)
 	fmt.Println(*logRoot)
