@@ -21,7 +21,7 @@ func main() {
 	flag.Parse()
 	//end step1 parser from command line
 
-	//step2 parse the main config file kodfs.cfg
+	//step2 parse the main config file  kodfs.cfg
 	confPath := *configRoot + "/kodfs.cfg"
 	cfg := kodfs_config.NewKodsConfig()
 	cfg.ParseConfig(confPath)
