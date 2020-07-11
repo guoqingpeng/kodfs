@@ -28,4 +28,6 @@ func main() {
 
 	cfg.ParseConfig(confPath)
 
+	fmt.Println(cfg)
+
 }

@@ -1,11 +1,18 @@
 package kodfs_config
 
+import (
+	"fmt"
+	"github.com/Unknwon/goconfig"
+	"reflect"
+	"strconv"
+)
+
 type KodfsConfig struct {
-	httpPort int
+	HttpPort int
 
-	httpsPort int
+	HttpsPort string
 
-	MaxCups int
+	MaxCups string
 }
 
 //init a object
@@ -21,21 +28,59 @@ func NewKodsConfig() *KodfsConfig {
 // use defalut value if config file not set
 func (cfg *KodfsConfig) SetDefaultConfig() {
 
-	cfg.httpPort = 8880
+	cfg.HttpPort = 8880
 
-	cfg.httpsPort = 4443
+	cfg.HttpsPort = "443"
 
-	cfg.MaxCups = 4
+	cfg.MaxCups = "4"
 
 }
 
-//parse config file for real
+//parse config file for real set
 func (cfg *KodfsConfig) ParseConfig(confPath string) {
 
+	myfile, err := goconfig.LoadConfigFile(confPath)
+
+	if err != nil {
+
+		fmt.Println("读取配置文件失败[kodfs.cfg] 找不到")
+
+	}
+	sectios := myfile.GetSectionList()
+
+	for i := 0; i < len(sectios); i++ {
+
+		setcion := sectios[i]
+
+		if setcion == "server" {
+
+			keys := myfile.GetKeyList(setcion)
+
+			v_cfg := reflect.ValueOf(cfg).Elem()
+
+			//取出配置的项目，覆盖默认设置
+			for _, key := range keys {
+				f := v_cfg.FieldByName(key)
+				v, _ := myfile.GetValue(setcion, key)
+				setConfigValue(f, v)
+			}
+		}
+	}
+
 }
 
-//获取http端口
-func (cfg *KodfsConfig) GetHttpPort() int {
+//根据字段的类型设置对应的值
+func setConfigValue(field reflect.Value, value string) {
 
-	return cfg.httpPort
+	switch field.Type().String() {
+
+	case "string":
+		field.SetString(value)
+
+	case "int":
+		i, _ := strconv.Atoi(value)
+		field.SetInt(int64(i))
+	default:
+
+	}
 }
