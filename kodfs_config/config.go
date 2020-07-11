@@ -1,10 +1,5 @@
 package kodfs_config
 
-import (
-	"fmt"
-	"os"
-)
-
 type KodfsConfig struct {
 	httpPort int
 
@@ -37,13 +32,6 @@ func (cfg *KodfsConfig) SetDefaultConfig() {
 //parse config file for real
 func (cfg *KodfsConfig) ParseConfig(confPath string) {
 
-	myfile, err := os.Open("./conf/kodfs.cfg")
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Println(myfile)
 }
 
 //获取http端口
