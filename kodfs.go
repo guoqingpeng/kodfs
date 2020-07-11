@@ -21,7 +21,7 @@ func main() {
 	flag.Parse() //别忘记了写这个
 	//end parser
 
-	//step2 解析主配置文件
+	//step2 parse the main config file kodfs.cfg
 	confPath := *configRoot + "/kodfs.cfg"
 
 	cfg := kodfs_config.NewKodsConfig()
