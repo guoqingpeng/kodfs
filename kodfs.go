@@ -9,7 +9,7 @@ import (
 //set up system args only accept from the console
 
 var (
-	configRoot *string = flag.String("c", "/conf", "provide the config file path")
+	configRoot *string = flag.String("c", "./conf", "provide the config file path")
 	logRoot    *string = flag.String("l", "./log", "provide the log file path")
 )
 
@@ -23,7 +23,6 @@ func main() {
 
 	//step2 解析主配置文件
 	confPath := *configRoot + "/kodfs.cfg"
-	fmt.Println(confPath)
 
 	cfg := kodfs_config.NewKodsConfig()
 

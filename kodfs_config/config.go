@@ -37,15 +37,13 @@ func (cfg *KodfsConfig) SetDefaultConfig() {
 //parse config file for real
 func (cfg *KodfsConfig) ParseConfig(confPath string) {
 
-	configFile, error := os.Open(confPath)
+	myfile, err := os.Open("./conf/kodfs.cfg")
 
-	if error != nil {
-		fmt.Println("发生异常了")
-		fmt.Println(error)
+	if err != nil {
+		fmt.Println(err)
 	}
 
-	fmt.Println(configFile)
-
+	fmt.Println(myfile)
 }
 
 //获取http端口
