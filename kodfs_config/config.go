@@ -10,9 +10,9 @@ import (
 type KodfsConfig struct {
 	HttpPort int
 
-	HttpsPort string
+	HttpsPort int
 
-	MaxCups string
+	MaxCups int
 }
 
 //init a object
@@ -30,9 +30,9 @@ func (cfg *KodfsConfig) SetDefaultConfig() {
 
 	cfg.HttpPort = 8880
 
-	cfg.HttpsPort = "443"
+	cfg.HttpsPort = 443
 
-	cfg.MaxCups = "4"
+	cfg.MaxCups = 4
 
 }
 
