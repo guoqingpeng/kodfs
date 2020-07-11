@@ -9,8 +9,8 @@ import (
 //set up system args only accept from the console
 
 var (
-	configRoot *string = flag.String("c", "./conf", "provide the config file path")
-	logRoot    *string = flag.String("l", "./log", "provide the log file path")
+	configRoot *string = flag.String("c", "./conf/", "provide the config file path")
+	logRoot    *string = flag.String("l", "./log/", "provide the log file path")
 )
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 	//end step1 parser from command line
 
 	//step2 parse the main config file  kodfs.cfg
-	confPath := *configRoot + "/kodfs.cfg"
+	confPath := *configRoot + "kodfs.cfg"
 	cfg := kodfs_config.NewKodsConfig()
 	cfg.ParseConfig(confPath)
 	fmt.Println(cfg.HttpPort)
