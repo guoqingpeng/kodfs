@@ -17,19 +17,17 @@ func main() {
 
 	fmt.Println("可牛了。。。分布式对象存储系统开始服务")
 
-	//step1 start	to parse the args from inputs
-	flag.Parse() //别忘记了写这个
-	//end parser
+	//step1 start	to parse the args from command line
+	flag.Parse()
+	//end step1 parser from command line
 
 	//step2 parse the main config file kodfs.cfg
 	confPath := *configRoot + "/kodfs.cfg"
-
 	cfg := kodfs_config.NewKodsConfig()
-
 	cfg.ParseConfig(confPath)
-
 	fmt.Println(cfg.HttpPort)
 	fmt.Println(cfg.HttpsPort)
 	fmt.Println(cfg.MaxCups)
+	//end step2
 
 }
