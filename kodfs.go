@@ -28,6 +28,8 @@ func main() {
 
 	cfg.ParseConfig(confPath)
 
-	fmt.Println(cfg)
+	fmt.Println(cfg.HttpPort)
+	fmt.Println(cfg.HttpsPort)
+	fmt.Println(cfg.MaxCups)
 
 }

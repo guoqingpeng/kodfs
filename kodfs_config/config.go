@@ -80,7 +80,9 @@ func setConfigValue(field reflect.Value, value string) {
 	case "int":
 		i, _ := strconv.Atoi(value)
 		field.SetInt(int64(i))
+
 	default:
+		panic("can not find field type to convert")
 
 	}
 }
