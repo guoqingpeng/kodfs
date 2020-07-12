@@ -46,6 +46,7 @@ func (cfg *KodfsConfig) ParseConfig(confPath string) {
 		fmt.Println("读取配置文件失败[kodfs.cfg] 找不到")
 
 	}
+
 	sectios := myfile.GetSectionList()
 
 	for i := 0; i < len(sectios); i++ {
