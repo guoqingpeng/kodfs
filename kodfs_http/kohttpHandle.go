@@ -10,9 +10,9 @@ func ProcessHandle(writer http.ResponseWriter, request *http.Request) {
 
 	uri := request.URL.RequestURI()
 	fmt.Println(uri)
-	if strings.Contains(uri, "read") {
+	if strings.Contains(uri, "/read/") {
 		readFile(writer, request)
-	} else if strings.Contains(uri, "write") {
+	} else if strings.Contains(uri, "/write/") {
 		writeFile(writer, request)
 	} else {
 		writer.Write([]byte("暂不支持这个请求"))
