@@ -3,15 +3,15 @@ package kodfs_nameserver
 import "github.com/guoqingpeng/kodfs/kodfs_dataserver"
 
 type NameNode struct {
-	nameserver_name string
+	Nameserver_name string
 
-	nameserver_ip int
+	Nameserver_ip string
 
-	nameserver_port int
+	Nameserver_port int
 
-	dataservers []kodfs_dataserver.DataServer
+	Dataservers []kodfs_dataserver.DataServer
 }
 
-func NewNameNode() *NameNode {
-	return &NameNode{}
+func NewNameNode(nameserver_ip string, nameserver_port int) *NameNode {
+	return &NameNode{nameserver_ip: nameserver_ip, nameserver_port: nameserver_port}
 }

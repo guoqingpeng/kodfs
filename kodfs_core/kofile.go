@@ -1,15 +1,15 @@
 package kodfs_core
 
 type Kofile struct {
-	file_id int
+	File_id int
 
-	file_name string
+	File_name string
 
-	file_type string
+	File_type string
 
-	fileSize int
+	FileSize int
 
-	file_chunk_count int
+	File_chunk_count int
 
-	chunks []FileChunk
+	Chunks []FileChunk
 }

@@ -3,6 +3,7 @@ package kodfs_service
 import (
 	"github.com/guoqingpeng/kodfs/kodfs_config"
 	"github.com/guoqingpeng/kodfs/kodfs_http"
+	"github.com/guoqingpeng/kodfs/kodfs_nameserver"
 	"net/http"
 )
 
@@ -13,6 +14,14 @@ func Start_Kodfs_Service(cfg *kodfs_config.KodfsConfig) {
 	protocals := make([]string, 2)
 	protocals[0] = "http"
 	protocals[1] = "https"
+
+	//启动名称节点服务
+	nameserver := kodfs_nameserver.NewNameServer()
+
+	//主动监听来自dataserver发来的消息
+	go func() {
+		nameserver.NameServer_Start(cfg)
+	}()
 
 	//拦截所有请求进行处理
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
