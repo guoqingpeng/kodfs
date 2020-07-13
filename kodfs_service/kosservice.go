@@ -14,6 +14,7 @@ func Start_Kodfs_Service(cfg *kodfs_config.KodfsConfig) {
 	protocals[0] = "http"
 	protocals[1] = "https"
 
+	//拦截所有请求进行处理
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		kodfs_http.ProcessHandle(writer, request)
 	})

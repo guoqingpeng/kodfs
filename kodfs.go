@@ -25,7 +25,7 @@ func main() {
 	cfg.ParseConfig(confPath)
 	//end step2
 
-	//step3 	启动http 开始服务了
+	//step3 	启动http以及https 开始服务了
 	kodfs_service.Start_Kodfs_Service(cfg)
 	//step3 end
 
