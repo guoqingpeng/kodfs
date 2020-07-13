@@ -47,11 +47,11 @@ func (cfg *KodfsConfig) ParseConfig(confPath string) {
 
 	}
 
-	sectios := myfile.GetSectionList()
+	sections := myfile.GetSectionList()
 
-	for i := 0; i < len(sectios); i++ {
+	for i := 0; i < len(sections); i++ {
 
-		setcion := sectios[i]
+		setcion := sections[i]
 
 		if setcion == "server" {
 
