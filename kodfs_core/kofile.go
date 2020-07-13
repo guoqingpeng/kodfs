@@ -5,7 +5,7 @@ type Kofile struct {
 
 	file_name string
 
-	file_type int
+	file_type string
 
 	fileSize int
 
