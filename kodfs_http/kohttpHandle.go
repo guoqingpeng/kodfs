@@ -22,6 +22,10 @@ func ProcessHandle(writer http.ResponseWriter, request *http.Request) {
 
 func readFile(writer http.ResponseWriter, request *http.Request) {
 
+	//根据文件id，返回的该的chunk信息
+	//以及每个chunk所在的dataserver信息
+	//以及每个chunk所在的block信息
+	//然后由客户端自己去取chunk信息合成一个完整的file
 	writer.Write([]byte("文件读取成功"))
 
 }

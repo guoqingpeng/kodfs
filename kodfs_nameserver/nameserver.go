@@ -64,7 +64,7 @@ func (ns *NameServer) WriteFileService() {
 
 }
 
-//
+//返回一个文件的所有的chunk信息
 func (ns *NameServer) ReadFileService() {
 
 }
