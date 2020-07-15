@@ -131,6 +131,10 @@ func NameServerSelfCheckDataServerStatus(ns *NameServer) {
 					fmt.Println("数据服务器正常运行:" + ns.DataNodes[i].Dataserver_name)
 				}
 			}
+
+			if ns.DataNodes[i].Server_status == 1 {
+				fmt.Println("数据服务器出于离线状态，请维护服务器:" + ns.DataNodes[i].Dataserver_name)
+			}
 		}
 	} else {
 		fmt.Println("状态自检程序运行中，目前还没有数据服务器加入到集群中")
