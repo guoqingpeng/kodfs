@@ -12,7 +12,8 @@ import (
 )
 
 type NameServer struct {
-	NameNode *NameNode
+	NameNode  *NameNode
+	DataNodes []kodfs_dataserver.DataNode
 }
 
 func NewNameServer() *NameServer {
@@ -51,12 +52,12 @@ func (ns *NameServer) NameServer_Start(cfg *kodfs_config.KodfsConfig) {
 		if err != nil {
 			fmt.Println("accept error", err)
 		}
-		go handleDataServerSocket(conn)
+		go handleDataServerSocket(conn, ns)
 	}
 
 }
 
-func handleDataServerSocket(conn net.Conn) {
+func handleDataServerSocket(conn net.Conn, ns *NameServer) {
 	defer conn.Close()
 	buffer := make([]byte, 10240)
 	recvLen, err := conn.Read(buffer)
@@ -68,6 +69,28 @@ func handleDataServerSocket(conn net.Conn) {
 	dn := kodfs_dataserver.NewDataNode()
 
 	json.Unmarshal(buffer, dn)
+
+	//开始更新数据服务器的状态
+	if ns.DataNodes == nil {
+		ns.DataNodes = []kodfs_dataserver.DataNode{}
+		ns.DataNodes[0] = *dn
+	} else {
+		dnIn := false
+		for i := 0; i < len(ns.DataNodes); i++ {
+
+			if ns.DataNodes[i].Dataserver_name == dn.Dataserver_name {
+				ns.DataNodes[i] = *dn
+				dnIn = true
+				break
+			}
+
+		}
+		if !dnIn {
+			ns.DataNodes = append(ns.DataNodes, *dn)
+		}
+
+	}
+
 	_, err = conn.Write([]byte(time.Now().String() + ":" + strBuffer))
 	if err != nil {
 		fmt.Println("send message error", err)

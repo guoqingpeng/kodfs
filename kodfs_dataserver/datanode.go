@@ -1,6 +1,8 @@
 package kodfs_dataserver
 
-import "github.com/guoqingpeng/kodfs/kodfs_core"
+import (
+	"github.com/guoqingpeng/kodfs/kodfs_core"
+)
 
 type DataNode struct {
 
@@ -24,6 +26,9 @@ type DataNode struct {
 
 	//状态
 	Server_status int
+
+	//更新状态时间戳
+	Timestmp int64
 
 	Blocks []kodfs_core.Block
 }
