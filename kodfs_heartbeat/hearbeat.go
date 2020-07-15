@@ -45,3 +45,10 @@ func dataServerRecv(conn net.Conn) {
 		fmt.Println("Message len:", n)
 	}
 }
+
+//名称服务器自检数据服务器的健康状态
+func NameServerSelfCheckDataServerStatus() {
+
+	fmt.Println("执行与每个数据服务器的连接状况，更新最新服务器的信息")
+
+}

@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	serverAddr := "127.0.0.1:52255"
+	serverAddr := "192.168.6.20:52255"
 	tcpAddr, err := net.ResolveTCPAddr("tcp", serverAddr)
 	if err != nil {
 		fmt.Println("Resolve TCPAddr error", err)
@@ -21,7 +21,7 @@ func main() {
 	}
 
 	ds := kodfs_dataserver.NewDataNode()
-	ds.Dataserver_ip = "127.0.0.1"
+	ds.Dataserver_ip = "192.168.6.20"
 	ds.Dataserver_port = 55255
 	ds.Dataserver_name = "kaku1"
 	ds.Data_dir = "./data/"

@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"github.com/guoqingpeng/kodfs/kodfs_config"
 	"github.com/guoqingpeng/kodfs/kodfs_dataserver"
+	"github.com/guoqingpeng/kodfs/kodfs_heartbeat"
 	"net"
 	"strconv"
+	"time"
 )
 
 type NameServer struct {
@@ -28,6 +30,22 @@ func (ns *NameServer) NameServer_Start(cfg *kodfs_config.KodfsConfig) {
 		fmt.Println("listener creat error", err)
 	}
 	fmt.Println("waiting for client")
+
+	//开启一个线程定时轮训每个服务器的状态
+	//每个dataserver的更新时间要求5秒已更新，未达到这个标准则视为掉线
+	//需要发出警告
+	go func() {
+		// 放心这个线程是不会down 掉的
+		for {
+			t1 := time.NewTicker(2 * time.Second)
+			select {
+			case <-t1.C:
+				kodfs_heartbeat.NameServerSelfCheckDataServerStatus()
+			}
+		}
+	}()
+
+	//处理心跳包
 	for {
 		conn, err := lner.Accept()
 		if err != nil {
@@ -47,13 +65,9 @@ func handleDataServerSocket(conn net.Conn) {
 	}
 	strBuffer := string(buffer[:recvLen])
 	fmt.Println("Message: ", strBuffer)
-
 	dn := kodfs_dataserver.NewDataNode()
-
 	json.Unmarshal(buffer, dn)
-
 	_, err = conn.Write([]byte("I am server, you message"))
-
 	if err != nil {
 		fmt.Println("send message error", err)
 	}
