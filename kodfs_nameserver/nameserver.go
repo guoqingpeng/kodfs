@@ -66,6 +66,7 @@ func handleDataServerSocket(conn net.Conn) {
 	strBuffer := string(buffer[:recvLen])
 	fmt.Println("Message: ", strBuffer)
 	dn := kodfs_dataserver.NewDataNode()
+
 	json.Unmarshal(buffer, dn)
 	_, err = conn.Write(buffer)
 	if err != nil {
