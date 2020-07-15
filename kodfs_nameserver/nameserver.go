@@ -121,7 +121,6 @@ func (ns *NameServer) ReadFileService() {
 //名称服务器自检数据服务器的健康状态
 func NameServerSelfCheckDataServerStatus(ns *NameServer) {
 
-	fmt.Println("状态自检程序运行中")
 	if len(ns.DataNodes) > 0 {
 		for i := 0; i < len(ns.DataNodes); i++ {
 			if ns.DataNodes[i].Server_status == 0 {
@@ -133,6 +132,9 @@ func NameServerSelfCheckDataServerStatus(ns *NameServer) {
 				}
 			}
 		}
+	} else {
+		fmt.Println("状态自检程序运行中，目前还没有数据服务器加入到集群中")
+
 	}
 
 }
