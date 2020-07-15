@@ -67,7 +67,7 @@ func handleDataServerSocket(conn net.Conn) {
 	fmt.Println("Message: ", strBuffer)
 	dn := kodfs_dataserver.NewDataNode()
 	json.Unmarshal(buffer, dn)
-	_, err = conn.Write([]byte("I am server, you message"))
+	_, err = conn.Write(buffer)
 	if err != nil {
 		fmt.Println("send message error", err)
 	}
