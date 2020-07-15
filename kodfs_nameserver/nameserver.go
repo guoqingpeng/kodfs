@@ -84,9 +84,9 @@ func handleDataServerSocket(conn net.Conn, ns *NameServer) {
 			if ns.DataNodes[i].Dataserver_name == dn.Dataserver_name {
 
 				if ns.DataNodes[i].Server_status == 1 {
-					fmt.Println("数据服务器重新上线！")
+					fmt.Println("数据服务器重新上线！" + dn.Dataserver_name)
 				} else {
-					fmt.Println("数据服务器提交数据更新！")
+					fmt.Println("数据服务器提交数据更新！" + dn.Dataserver_name)
 				}
 
 				ns.DataNodes[i] = *dn
@@ -97,7 +97,7 @@ func handleDataServerSocket(conn net.Conn, ns *NameServer) {
 		}
 		if !dnIn {
 			ns.DataNodes = append(ns.DataNodes, *dn)
-			fmt.Println("新增加了一台数据服务器！")
+			fmt.Println("新增了一台数据服务器上线了！:" + dn.Dataserver_name)
 		}
 
 	}
