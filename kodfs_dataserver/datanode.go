@@ -28,6 +28,6 @@ type DataNode struct {
 	Blocks []kodfs_core.Block
 }
 
-func NewDataNode(dataserver_name string) *DataNode {
-	return &DataNode{Dataserver_name: dataserver_name}
+func NewDataNode() *DataNode {
+	return &DataNode{}
 }

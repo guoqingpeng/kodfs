@@ -13,5 +13,5 @@ type NameNode struct {
 }
 
 func NewNameNode(nameserver_ip string, nameserver_port int) *NameNode {
-	return &NameNode{nameserver_ip: nameserver_ip, nameserver_port: nameserver_port}
+	return &NameNode{Nameserver_ip: nameserver_ip, Nameserver_port: nameserver_port}
 }

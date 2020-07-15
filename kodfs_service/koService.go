@@ -23,7 +23,7 @@ func Start_Kodfs_Service(cfg *kodfs_config.KodfsConfig) {
 		nameserver.NameServer_Start(cfg)
 	}()
 
-	//拦截所有请求进行处理
+	//拦截客户端所有请求进行处理
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		kodfs_http.ProcessHandle(writer, request)
 	})

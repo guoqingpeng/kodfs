@@ -20,9 +20,16 @@ func main() {
 		fmt.Println("connect server error", err)
 	}
 
-	ds := kodfs_dataserver.NewDataNode("kaku1")
+	ds := kodfs_dataserver.NewDataNode()
+	ds.Dataserver_ip = "127.0.0.1"
+	ds.Dataserver_port = 55255
+	ds.Dataserver_name = "kaku1"
+	ds.Data_dir = "./data/"
+	ds.Left_capacity = 34 * 1025
+	ds.Total_capacity = 2024 * 1024
+	ds.Server_status = 0
 	var dsBytes, _ = json.Marshal(ds)
-	fmt.Println("ss" + string((dsBytes)))
+	fmt.Println(string((dsBytes)))
 
 	conn.Write(dsBytes)
 	recv(conn)

@@ -1,8 +1,10 @@
 package kodfs_nameserver
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/guoqingpeng/kodfs/kodfs_config"
+	"github.com/guoqingpeng/kodfs/kodfs_dataserver"
 	"net"
 	"strconv"
 )
@@ -20,7 +22,7 @@ func NewNameServer() *NameServer {
 func (ns *NameServer) NameServer_Start(cfg *kodfs_config.KodfsConfig) {
 
 	ns.NameNode = NewNameNode("127.0.0.1", 52255)
-	address := ns.NameNode.nameserver_ip + ":" + strconv.Itoa(ns.NameNode.nameserver_port)
+	address := ns.NameNode.Nameserver_ip + ":" + strconv.Itoa(ns.NameNode.Nameserver_port)
 	lner, err := net.Listen("tcp", address)
 	if err != nil {
 		fmt.Println("listener creat error", err)
@@ -45,7 +47,13 @@ func handleDataServerSocket(conn net.Conn) {
 	}
 	strBuffer := string(buffer[:recvLen])
 	fmt.Println("Message: ", strBuffer)
-	_, err = conn.Write([]byte("I am server, you message :" + strBuffer))
+
+	dn := kodfs_dataserver.NewDataNode()
+
+	json.Unmarshal(buffer, dn)
+
+	_, err = conn.Write([]byte("I am server, you message"))
+
 	if err != nil {
 		fmt.Println("send message error", err)
 	}
