@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/guoqingpeng/kodfs/kodfs_dataserver"
+	"github.com/guoqingpeng/kodfs/kodfs_nameserver"
 	"net"
+	"time"
 )
 
 //数据服务器发送健康心跳包给名称节点
@@ -44,11 +46,4 @@ func dataServerRecv(conn net.Conn) {
 		fmt.Println("read message from server:" + string(buffer[:n]))
 		fmt.Println("Message len:", n)
 	}
-}
-
-//名称服务器自检数据服务器的健康状态
-func NameServerSelfCheckDataServerStatus() {
-
-	fmt.Println("执行与每个数据服务器的连接状况，更新最新服务器的信息")
-
 }
