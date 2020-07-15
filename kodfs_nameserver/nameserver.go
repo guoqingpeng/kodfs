@@ -1,6 +1,7 @@
 package kodfs_nameserver
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/guoqingpeng/kodfs/kodfs_config"
@@ -65,28 +66,37 @@ func handleDataServerSocket(conn net.Conn, ns *NameServer) {
 	}
 	strBuffer := string(buffer[:recvLen])
 	fmt.Println("Message: ", strBuffer)
-	var dn kodfs_dataserver.DataNode
+	dn := kodfs_dataserver.NewDataNode()
+	err = json.Unmarshal(bytes.Trim(buffer, "\x00"), dn)
 
-	json.Unmarshal(buffer, &dn)
+	if err != nil {
+		fmt.Println("反序列化失败")
+	}
 
 	//开始更新数据服务器的状态
 	if len(ns.DataNodes) == 0 {
 		ns.DataNodes = make([]kodfs_dataserver.DataNode, 1)
-		ns.DataNodes[0] = dn
+		ns.DataNodes[0] = *dn
 	} else {
 		dnIn := false
 		for i := 0; i < len(ns.DataNodes); i++ {
 
 			if ns.DataNodes[i].Dataserver_name == dn.Dataserver_name {
-				ns.DataNodes[i] = dn
+
+				if ns.DataNodes[i].Server_status == 1 {
+					fmt.Println("数据服务器重新上线！")
+				} else {
+					fmt.Println("数据服务器提交数据更新！")
+				}
+
+				ns.DataNodes[i] = *dn
 				dnIn = true
-				fmt.Println("数据服务器提交数据更新！")
 				break
 			}
 
 		}
 		if !dnIn {
-			ns.DataNodes = append(ns.DataNodes, dn)
+			ns.DataNodes = append(ns.DataNodes, *dn)
 			fmt.Println("新增加了一台数据服务器！")
 		}
 
@@ -114,13 +124,14 @@ func NameServerSelfCheckDataServerStatus(ns *NameServer) {
 	fmt.Println("状态自检程序运行中")
 	if len(ns.DataNodes) > 0 {
 		for i := 0; i < len(ns.DataNodes); i++ {
-
-			if (time.Now().UnixNano() - ns.DataNodes[i].Timestmp) > 20 {
-
-				fmt.Println("数据服务器长期没有联系上名称服务器，执行下线")
-				ns.DataNodes[i].Server_status = 1
+			if ns.DataNodes[i].Server_status == 0 {
+				if (time.Now().Unix() - ns.DataNodes[i].Timestmp) > 10 {
+					fmt.Println("数据服务器长期没有联系上名称服务器，执行下线:" + ns.DataNodes[i].Dataserver_name)
+					ns.DataNodes[i].Server_status = 1
+				} else {
+					fmt.Println("数据服务器正常运行:" + ns.DataNodes[i].Dataserver_name)
+				}
 			}
-
 		}
 	}
 
