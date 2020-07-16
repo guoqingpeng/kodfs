@@ -16,13 +16,15 @@ func main() {
 
 	for i := 0; i < 16; i++ {
 
-		block, _ := os.Create("./testBlock" + strconv.Itoa(i))
+		block, _ := os.Create("./testBlocks/" + strconv.Itoa(i))
 
 		blockBytes := make([]byte, 1024*1024*64)
 
 		block.Write(blockBytes)
 
 	}
+
+	return
 
 	//模拟不停的报告自身的状态
 	for {
