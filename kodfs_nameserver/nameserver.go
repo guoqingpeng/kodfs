@@ -71,7 +71,7 @@ func handleDataServerSocket(conn net.Conn, ns *NameServer) {
 			strBuffer += string(buffer[:recvLen])
 		}
 
-		//在末尾多加了一个$
+		//在末尾多加了一个$作为包分割的最后一个包
 		if strings.Contains(string(buffer[:recvLen]), "$") {
 			strBuffer = strings.Trim(strBuffer, "$")
 			break
