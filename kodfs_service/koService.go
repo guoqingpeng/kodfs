@@ -28,6 +28,8 @@ func Start_Kodfs_Service(cfg *kodfs_config.KodfsConfig) {
 		kodfs_http.ProcessHandle(writer, request)
 	})
 
+	http.Handle("/read/", http.StripPrefix("/read", http.FileServer(http.Dir("./files"))))
+
 	//分别开启http和https接口服务
 	for i := 0; i < len(protocals); i++ {
 
