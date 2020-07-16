@@ -24,7 +24,7 @@ func NewNameServer() *NameServer {
 //开启监听，主要维护数据服务器的存活状态 dataserver info
 func (ns *NameServer) NameServer_Start(cfg *kodfs_config.KodfsConfig) {
 
-	ns.NameNode = NewNameNode("127.0.0.1", 52255)
+	ns.NameNode = NewNameNode("192.168.6.20", 52255)
 	address := ns.NameNode.Nameserver_ip + ":" + strconv.Itoa(ns.NameNode.Nameserver_port)
 	lner, err := net.Listen("tcp", address)
 	if err != nil {
