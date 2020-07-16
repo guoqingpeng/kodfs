@@ -9,3 +9,4 @@ output
 /**/*.log
 profile.out
 coverage.txt
+testBlocks
