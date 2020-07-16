@@ -8,6 +8,7 @@ import (
 	"github.com/guoqingpeng/kodfs/kodfs_dataserver"
 	"net"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -63,15 +64,21 @@ func handleDataServerSocket(conn net.Conn, ns *NameServer) {
 	var strBuffer string
 
 	for {
-		buffer := make([]byte, 1024*10)
+		buffer := make([]byte, 1024)
 		recvLen, err := conn.Read(buffer)
-		if err != nil {
-			fmt.Println("Read error", err)
-		}
+
 		if recvLen > 0 {
 			strBuffer += string(buffer[:recvLen])
-		} else {
+		}
+
+		//在末尾多加了一个$
+		if strings.Contains(string(buffer[:recvLen]), "$") {
+			strBuffer = strings.Trim(strBuffer, "$")
 			break
+		}
+
+		if err != nil {
+			fmt.Println("Read error", err)
 		}
 
 	}
