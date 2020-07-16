@@ -15,7 +15,7 @@ func main() {
 	//模拟生成block 每个磁盘生成10个block，每个block512 MB，每个block4MB，共16个chunk
 	ds := kodfs_dataserver.NewDataNode()
 	blocks := make([]*kodfs_metadata.Block, 2000*100) // 每台数据服务器存储单位为T
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 2; i++ {
 
 		//blockfile, _ := os.Create("./testBlocks/" + strconv.Itoa(i))
 
@@ -28,7 +28,7 @@ func main() {
 		blockInfo.Block_size = 1024 * 1024 * 64
 
 		blockInfo.FileChunks = make([]*kodfs_metadata.FileChunk, 400)
-		for j := 0; j < 400; j++ {
+		for j := 0; j < 4; j++ {
 			chunkInfo := kodfs_metadata.NewFileChunk()
 			chunkInfo.File_chunk_belong_to_block = blockInfo.Block_id
 			chunkInfo.File_chunk_id = j
@@ -63,7 +63,7 @@ func main() {
 
 	ds.Dataserver_ip = "192.168.6.20"
 	ds.Dataserver_port = 55255
-	ds.Dataserver_name = "kaku" + strconv.Itoa(1)
+	ds.Dataserver_name = "kaku" + strconv.Itoa(8)
 	ds.Data_dir = "./data/"
 	ds.Left_capacity = 34 * 1024
 	ds.Total_capacity = 2024 * 1024
@@ -74,7 +74,6 @@ func main() {
 	conn.Write([]byte("$"))
 	recv(conn)
 	conn.Close()
-
 }
 
 func recv(conn net.Conn) {
