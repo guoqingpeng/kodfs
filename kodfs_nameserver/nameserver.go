@@ -59,7 +59,7 @@ func (ns *NameServer) NameServer_Start(cfg *kodfs_config.KodfsConfig) {
 
 func handleDataServerSocket(conn net.Conn, ns *NameServer) {
 	defer conn.Close()
-	buffer := make([]byte, 10240)
+	buffer := make([]byte, 1024*1024*10)
 	recvLen, err := conn.Read(buffer)
 	if err != nil {
 		fmt.Println("Read error", err)
