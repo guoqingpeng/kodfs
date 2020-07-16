@@ -7,6 +7,7 @@ import (
 	"github.com/guoqingpeng/kodfs/kodfs_config"
 	"github.com/guoqingpeng/kodfs/kodfs_dataserver"
 	"net"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -79,11 +80,15 @@ func handleDataServerSocket(conn net.Conn, ns *NameServer) {
 
 		if err != nil {
 			fmt.Println("Read error", err)
+			break
 		}
 
 	}
 
 	fmt.Println("Message: ", strBuffer)
+	logfile, _ := os.Create("./logs/" + "kaku.log")
+	logfile.Write(bytes.Trim([]byte(strBuffer), "\x00"))
+
 	dn := kodfs_dataserver.NewDataNode()
 	err := json.Unmarshal(bytes.Trim([]byte(strBuffer), "\x00"), dn)
 
