@@ -11,9 +11,13 @@ type FileChunk struct {
 
 	File_chunk_position_end_in_block int
 
-	File_chunk_belong_to_block Block
+	File_chunk_belong_to_block *Block
 
 	File_chunk_is_empty int
 
-	File_chunk_belong_to_file KofileMetaData
+	File_chunk_belong_to_file *KofileMetaData
+}
+
+func NewFileChunk() *FileChunk {
+	return &FileChunk{}
 }

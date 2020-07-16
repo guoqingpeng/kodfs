@@ -1,5 +1,7 @@
 package kodfs_dataserver
 
+import "github.com/guoqingpeng/kodfs/kodfs_metadata"
+
 type DataNode struct {
 
 	//数据服务器名称
@@ -26,7 +28,7 @@ type DataNode struct {
 	//更新状态时间戳
 	Timestmp int64
 
-	//Blocks []kodfs_core.Block
+	Blocks []kodfs_metadata.Block
 }
 
 func NewDataNode() *DataNode {
