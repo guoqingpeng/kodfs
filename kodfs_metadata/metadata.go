@@ -11,5 +11,5 @@ type KofileMetaData struct {
 
 	File_chunk_count int
 
-	Chunks []FileChunk
+	//Chunks []FileChunk
 }

@@ -28,7 +28,7 @@ type DataNode struct {
 	//更新状态时间戳
 	Timestmp int64
 
-	Blocks []kodfs_metadata.Block
+	Blocks []*kodfs_metadata.Block
 }
 
 func NewDataNode() *DataNode {

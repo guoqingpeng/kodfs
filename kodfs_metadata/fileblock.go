@@ -5,7 +5,7 @@ type Block struct {
 
 	Block_size int
 
-	FileChunks []FileChunk
+	FileChunks []*FileChunk
 }
 
 func NewBlock() *Block {
