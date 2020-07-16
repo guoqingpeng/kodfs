@@ -28,8 +28,8 @@ func main() {
 		blockInfo.Block_id = i
 		blockInfo.Block_size = 1024 * 1024 * 64
 
-		blockInfo.FileChunks = make([]*kodfs_metadata.FileChunk, 64)
-		for j := 0; j < 64; j++ {
+		blockInfo.FileChunks = make([]*kodfs_metadata.FileChunk, 6)
+		for j := 0; j < 6; j++ {
 			chunkInfo := kodfs_metadata.NewFileChunk()
 			chunkInfo.File_chunk_belong_to_block = blockInfo.Block_id
 			chunkInfo.File_chunk_id = j
@@ -48,39 +48,32 @@ func main() {
 	fmt.Println("数据服务器初始化完成")
 
 	//模拟不停的报告自身的状态
-	for {
 
-		for i := 0; i < 40; i++ {
+	serverAddr := "192.168.6.20:52255"
+	tcpAddr, err := net.ResolveTCPAddr("tcp", serverAddr)
 
-			serverAddr := "192.168.6.20:52255"
-			tcpAddr, err := net.ResolveTCPAddr("tcp", serverAddr)
-
-			if err != nil {
-				fmt.Println("Resolve TCPAddr error", err)
-			}
-			conn, err := net.DialTCP("tcp", nil, tcpAddr)
-
-			if err != nil {
-				fmt.Println("connect server error:", err)
-				continue
-			}
-
-			ds.Dataserver_ip = "192.168.6.20"
-			ds.Dataserver_port = 55255
-			ds.Dataserver_name = "kaku" + strconv.Itoa(i)
-			ds.Data_dir = "./data/"
-			ds.Left_capacity = 34 * 1025
-			ds.Total_capacity = 2024 * 1024
-			ds.Server_status = 0
-			ds.Timestmp = time.Now().Unix()
-			var dsBytes, _ = json.Marshal(ds)
-			conn.Write(dsBytes)
-			recv(conn)
-			conn.Close()
-		}
-
-		time.Sleep(time.Millisecond * 5000)
+	if err != nil {
+		fmt.Println("Resolve TCPAddr error", err)
 	}
+	conn, err := net.DialTCP("tcp", nil, tcpAddr)
+
+	if err != nil {
+		fmt.Println("connect server error:", err)
+		//continue
+	}
+
+	ds.Dataserver_ip = "192.168.6.20"
+	ds.Dataserver_port = 55255
+	ds.Dataserver_name = "kaku" + strconv.Itoa(1)
+	ds.Data_dir = "./data/"
+	ds.Left_capacity = 34 * 1025
+	ds.Total_capacity = 2024 * 1024
+	ds.Server_status = 0
+	ds.Timestmp = time.Now().Unix()
+	var dsBytes, _ = json.Marshal(ds)
+	conn.Write(dsBytes)
+	recv(conn)
+	conn.Close()
 }
 
 func recv(conn net.Conn) {

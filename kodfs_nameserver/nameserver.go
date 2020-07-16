@@ -59,15 +59,26 @@ func (ns *NameServer) NameServer_Start(cfg *kodfs_config.KodfsConfig) {
 
 func handleDataServerSocket(conn net.Conn, ns *NameServer) {
 	defer conn.Close()
-	buffer := make([]byte, 1024*1024*10)
-	recvLen, err := conn.Read(buffer)
-	if err != nil {
-		fmt.Println("Read error", err)
+
+	var strBuffer string
+
+	for {
+		buffer := make([]byte, 1024*10)
+		recvLen, err := conn.Read(buffer)
+		if err != nil {
+			fmt.Println("Read error", err)
+		}
+		if recvLen > 0 {
+			strBuffer += string(buffer[:recvLen])
+		} else {
+			break
+		}
+
 	}
-	strBuffer := string(buffer[:recvLen])
+
 	fmt.Println("Message: ", strBuffer)
 	dn := kodfs_dataserver.NewDataNode()
-	err = json.Unmarshal(bytes.Trim(buffer, "\x00"), dn)
+	err := json.Unmarshal(bytes.Trim([]byte(strBuffer), "\x00"), dn)
 
 	if err != nil {
 		fmt.Println("反序列化失败")
